@@ -1,0 +1,75 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+<style>
+    .error-page {
+        min-height: 75vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem 1rem;
+        background: var(--bs-tertiary-bg);
+    }
+
+    .error-card {
+        width: 100%;
+        max-width: 620px;
+        padding: 3rem 2rem;
+        text-align: center;
+        background: var(--bs-body-bg);
+        border: 1px solid var(--bs-border-color);
+        border-radius: 1.5rem;
+        box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.06);
+    }
+
+    .error-code {
+        margin-bottom: 0.5rem;
+        color: var(--bs-primary);
+        font-size: clamp(5rem, 20vw, 9rem);
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: -0.06em;
+    }
+
+    .error-icon {
+        margin-bottom: 1rem;
+        color: var(--bs-secondary-color);
+        font-size: 2rem;
+    }
+
+    .error-card .btn {
+        min-height: 46px;
+        padding: 0.7rem 1.5rem;
+        border-radius: 0.75rem;
+        font-weight: 600;
+    }
+
+    @media (max-width: 576px) {
+        .error-card {
+            padding: 2.5rem 1.25rem;
+        }
+    }
+</style>
+
+<div class="error-page">
+    <div class="error-card">
+        <div class="error-icon">
+            <i class="bi bi-compass" aria-hidden="true"></i>
+        </div>
+
+        <div class="error-code">404</div>
+
+        <h1 class="h2 fw-bold mb-3">Page not found</h1>
+
+        <p class="text-body-secondary mb-4">
+            Sorry, the page you’re looking for doesn’t exist
+            or may have been moved.
+        </p>
+
+        <a href="{% url 'blog:index' %}" class="btn btn-primary">
+            <i class="bi bi-house-door me-2" aria-hidden="true"></i>
+            Back to home
+        </a>
+    </div>
+</div>
+{% endblock %}

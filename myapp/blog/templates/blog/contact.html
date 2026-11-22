@@ -1,0 +1,134 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+<style>
+    .contact-page {
+        min-height: 70vh;
+        padding: 3rem 1rem;
+        background: var(--bs-tertiary-bg);
+    }
+
+    .contact-card {
+        width: 100%;
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 2.5rem;
+        background: var(--bs-body-bg);
+        border: 1px solid var(--bs-border-color);
+        border-radius: 1.25rem;
+        box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.06);
+    }
+
+    .contact-page .form-control {
+        min-height: 48px;
+        border-radius: 0.75rem;
+    }
+
+    .contact-page textarea.form-control {
+        min-height: 180px;
+        resize: vertical;
+    }
+
+    .contact-page .form-label {
+        font-weight: 600;
+    }
+
+    .contact-page .btn {
+        min-height: 46px;
+        padding-inline: 1.5rem;
+        border-radius: 0.75rem;
+        font-weight: 600;
+    }
+
+    @media (max-width: 576px) {
+        .contact-card {
+            padding: 1.5rem;
+        }
+    }
+</style>
+
+<section class="contact-page">
+    <div class="container">
+        <div class="contact-card">
+            <div class="text-center mb-4">
+                <span class="badge text-bg-primary-subtle text-primary mb-3">
+                    Get in touch
+                </span>
+                <h1 class="h3 fw-bold mb-2">Contact Us</h1>
+                <p class="text-body-secondary mb-0">
+                    Have a question or feedback? Send us a message.
+                </p>
+            </div>
+
+            {% for field in form %}
+                {% if field.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        <strong>{{ field.label }}:</strong>
+                        {% for error in field.errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            {% if success_message %}
+                <div class="alert alert-success" role="alert">
+                    <i class="bi bi-check-circle me-2" aria-hidden="true"></i>
+                    {{ success_message }}
+                </div>
+            {% endif %}
+
+            <form method="post" class="row g-3">
+                {% csrf_token %}
+
+                <div class="col-12 col-md-6">
+                    <label for="name" class="form-label">Name</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="name"
+                        name="name"
+                        value="{{ name|default:'' }}"
+                        placeholder="Your name"
+                        autocomplete="name"
+                        required
+                    >
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <label for="email" class="form-label">Email address</label>
+                    <input
+                        type="email"
+                        class="form-control"
+                        id="email"
+                        name="email"
+                        value="{{ email|default:'' }}"
+                        placeholder="you@example.com"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+
+                <div class="col-12">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea
+                        class="form-control"
+                        id="message"
+                        name="message"
+                        rows="6"
+                        placeholder="How can we help?"
+                        required
+                    >{{ message|default:'' }}</textarea>
+                </div>
+
+                <div class="col-12 d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-send me-2" aria-hidden="true"></i>
+                        Send Message
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

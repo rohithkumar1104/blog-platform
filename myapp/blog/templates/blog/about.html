@@ -1,0 +1,80 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+<style>
+    .about-page {
+        padding: 3.5rem 1rem;
+        background: var(--bs-tertiary-bg);
+    }
+
+    .about-card {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 2.5rem;
+        background: var(--bs-body-bg);
+        border: 1px solid var(--bs-border-color);
+        border-radius: 1.5rem;
+        box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.05);
+    }
+
+    .about-image {
+        width: 100%;
+        max-width: 360px;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 1rem;
+    }
+
+    .about-content {
+        color: var(--bs-secondary-color);
+        font-size: 1.05rem;
+        line-height: 1.8;
+        overflow-wrap: anywhere;
+    }
+
+    @media (max-width: 767px) {
+        .about-card {
+            padding: 1.5rem;
+        }
+
+        .about-image {
+            max-width: 100%;
+            aspect-ratio: 16 / 9;
+        }
+    }
+</style>
+
+<section class="about-page">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="badge text-bg-primary-subtle text-primary mb-3">
+                About Us
+            </span>
+            <h1 class="display-5 fw-bold mb-3">Stories worth sharing</h1>
+            <p class="text-body-secondary mb-0">
+                A place to share ideas, experiences, and knowledge.
+            </p>
+        </div>
+
+        <div class="about-card">
+            <div class="row align-items-center g-4 g-lg-5">
+                <div class="col-12 col-md-5 text-center">
+                    <img
+                        src="https://picsum.photos/720/720"
+                        alt="A visual representing our blog community"
+                        class="about-image"
+                        loading="lazy"
+                    >
+                </div>
+
+                <div class="col-12 col-md-7">
+                    <h2 class="h3 fw-bold mb-3">Who we are</h2>
+                    <div class="about-content">
+                        {{ about_content }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

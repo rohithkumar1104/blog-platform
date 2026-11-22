@@ -1,0 +1,13 @@
+<footer class="bg-dark text-light py-4 mt-auto">
+    <div class="container">
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2">
+            <span class="small">
+                &copy; {% now "Y" %} {{ blog_title|default:"My Blog" }}. All rights reserved.
+            </span>
+
+            <a href="{% url 'blog:index' %}" class="text-light text-decoration-none small">
+                Back to home
+            </a>
+        </div>
+    </div>
+</footer>

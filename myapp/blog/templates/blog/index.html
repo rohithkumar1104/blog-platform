@@ -1,0 +1,433 @@
+
+{% extends "blog/base.html" %}
+
+{% block content %}
+
+<style>
+    .blog-index {
+        --blog-primary: #6366f1;
+        --blog-text: #1e293b;
+        --blog-muted: #64748b;
+        --blog-border: #e2e8f0;
+        --blog-bg: #f8fafc;
+
+        color: var(--blog-text);
+        padding: 2rem 0 4rem;
+    }
+
+    .blog-index .blog-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+    }
+
+    .blog-index .blog-heading {
+        font-size: clamp(1.8rem, 4vw, 2.5rem);
+        font-weight: 800;
+        letter-spacing: -1px;
+        margin-bottom: 0.5rem;
+    }
+
+    .blog-index .blog-subtitle {
+        color: var(--blog-muted);
+        margin-bottom: 0;
+        font-size: 0.95rem;
+    }
+
+    .blog-index .blog-search {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        width: 100%;
+        max-width: 350px;
+    }
+
+    .blog-index .blog-search .form-control {
+        border: 1px solid var(--blog-border);
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        box-shadow: none;
+    }
+
+    .blog-index .blog-search .form-control:focus {
+        border-color: var(--blog-primary);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+    }
+
+    .blog-index .search-btn {
+        background: var(--blog-primary);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        transition: background 0.2s ease;
+    }
+
+    .blog-index .search-btn:hover {
+        background: #4f46e5;
+    }
+
+    .blog-index .blog-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+        gap: 1.5rem;
+    }
+
+    .blog-index .blog-card {
+        background: #fff;
+        border: 1px solid var(--blog-border);
+        border-radius: 18px;
+        overflow: hidden;
+        height: 100%;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .blog-index .blog-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 14px 35px rgba(15, 23, 42, 0.09);
+    }
+
+    .blog-index .blog-card-image {
+        display: block;
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        background: #f1f5f9;
+    }
+
+    .blog-index .blog-card-body {
+        display: flex;
+        flex-direction: column;
+        padding: 1.5rem;
+        min-height: 210px;
+    }
+
+    .blog-index .blog-category {
+        display: inline-block;
+        align-self: flex-start;
+        background: #eef2ff;
+        color: #4f46e5;
+        border-radius: 50px;
+        padding: 0.35rem 0.8rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        text-decoration: none;
+    }
+
+    .blog-index .blog-title {
+        font-size: 1.2rem;
+        font-weight: 750;
+        line-height: 1.5;
+        margin-bottom: 0.75rem;
+    }
+
+    .blog-index .blog-title a {
+        color: var(--blog-text);
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .blog-index .blog-title a:hover {
+        color: var(--blog-primary);
+    }
+
+    .blog-index .blog-description {
+        color: var(--blog-muted);
+        font-size: 0.9rem;
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+    }
+
+    .blog-index .blog-card-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-top: auto;
+        padding-top: 1rem;
+        border-top: 1px solid #f1f5f9;
+    }
+
+    .blog-index .read-more {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        color: var(--blog-primary);
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-decoration: none;
+    }
+
+    .blog-index .read-more:hover {
+        color: #4338ca;
+    }
+
+    .blog-index .read-more span {
+        transition: transform 0.2s ease;
+    }
+
+    .blog-index .read-more:hover span {
+        transform: translateX(4px);
+    }
+
+    .blog-index .empty-state {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 4rem 1rem;
+        border: 1px dashed var(--blog-border);
+        border-radius: 18px;
+        background: var(--blog-bg);
+    }
+
+    .blog-index .empty-state h3 {
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+    }
+
+    .blog-index .empty-state p {
+        color: var(--blog-muted);
+        margin-bottom: 0;
+    }
+
+    .blog-index .blog-pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 3rem;
+    }
+
+    .blog-index .pagination {
+        gap: 0.4rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .blog-index .page-link {
+        border: 1px solid var(--blog-border);
+        border-radius: 10px !important;
+        color: var(--blog-text);
+        padding: 0.65rem 0.9rem;
+        font-size: 0.9rem;
+        background: white;
+        transition: all 0.2s ease;
+    }
+
+    .blog-index .page-link:hover {
+        background: #eef2ff;
+        color: var(--blog-primary);
+        border-color: #c7d2fe;
+    }
+
+    .blog-index .page-item.active .page-link {
+        background: var(--blog-primary);
+        border-color: var(--blog-primary);
+        color: white;
+    }
+
+    .blog-index .page-item.disabled .page-link {
+        background: #f8fafc;
+        color: #94a3b8;
+        pointer-events: none;
+    }
+
+    @media (max-width: 576px) {
+        .blog-index {
+            padding-top: 1.5rem;
+        }
+
+        .blog-index .blog-search {
+            max-width: 100%;
+        }
+
+        .blog-index .blog-card-image {
+            height: 200px;
+        }
+
+        .blog-index .blog-card-body {
+            padding: 1.25rem;
+        }
+    }
+</style>
+
+<div class="container blog-index">
+
+    <!-- Blog header -->
+    <div class="blog-header">
+
+        <div>
+            <h1 class="blog-heading">{{ blog_title }}</h1>
+            <p class="blog-subtitle">
+                Discover stories, ideas, and insights from our blog.
+            </p>
+        </div>
+
+        <!-- Search form -->
+        <form method="get" action="" class="blog-search">
+            <input
+                type="search"
+                name="q"
+                class="form-control"
+                placeholder="Search articles..."
+                aria-label="Search articles"
+                value="{{ request.GET.q|default:'' }}"
+            >
+
+            <button type="submit" class="search-btn" aria-label="Search">
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
+
+    </div>
+
+    <!-- Blog posts -->
+    <div class="blog-grid">
+
+        {% if page_obj %}
+
+            {% for post in page_obj %}
+
+                <article class="blog-card">
+
+                    <a
+                        href="{% url 'blog:detail' slug=post.slug %}"
+                        aria-label="Read {{ post.title }}"
+                    >
+                        <img
+                            src="{{ post.formatted_img_url }}"
+                            class="blog-card-image"
+                            alt="{{ post.title }}"
+                            loading="lazy"
+                        >
+                    </a>
+
+                    <div class="blog-card-body">
+
+                        <a href="#" class="blog-category">
+                            {{ post.category.name }}
+                        </a>
+
+                        <h2 class="blog-title">
+                            <a href="{% url 'blog:detail' slug=post.slug %}">
+                                {{ post.title }}
+                            </a>
+                        </h2>
+
+                        <p class="blog-description">
+                            {{ post.content|striptags|truncatechars:140 }}
+                        </p>
+
+                        <div class="blog-card-footer">
+
+                            <a
+                                href="{% url 'blog:detail' slug=post.slug %}"
+                                class="read-more"
+                            >
+                                Read article <span>&rarr;</span>
+                            </a>
+
+                            <span class="text-muted small">
+                                <i class="bi bi-book"></i>
+                                Article
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty-state">
+                <h3>No articles available</h3>
+                <p>There are no posts to display right now. Check back soon!</p>
+            </div>
+
+        {% endif %}
+
+    </div>
+
+    <!-- Pagination -->
+    {% if page_obj.has_other_pages %}
+
+        <nav class="blog-pagination" aria-label="Blog pagination">
+
+            <ul class="pagination">
+
+                <!-- Previous page -->
+                {% if page_obj.has_previous %}
+
+                    <li class="page-item">
+                        <a
+                            class="page-link"
+                            href="?page={{ page_obj.previous_page_number }}"
+                            aria-label="Previous page"
+                        >
+                            &larr; Previous
+                        </a>
+                    </li>
+
+                {% else %}
+
+                    <li class="page-item disabled">
+                        <span class="page-link">&larr; Previous</span>
+                    </li>
+
+                {% endif %}
+
+                <!-- Page numbers -->
+                {% for num in page_obj.paginator.page_range %}
+
+                    {% if page_obj.number == num %}
+
+                        <li class="page-item active" aria-current="page">
+                            <span class="page-link">{{ num }}</span>
+                        </li>
+
+                    {% elif num > page_obj.number|add:"-3" and num < page_obj.number|add:"3" %}
+
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ num }}">
+                                {{ num }}
+                            </a>
+                        </li>
+
+                    {% endif %}
+
+                {% endfor %}
+
+                <!-- Next page -->
+                {% if page_obj.has_next %}
+
+                    <li class="page-item">
+                        <a
+                            class="page-link"
+                            href="?page={{ page_obj.next_page_number }}"
+                            aria-label="Next page"
+                        >
+                            Next &rarr;
+                        </a>
+                    </li>
+
+                {% else %}
+
+                    <li class="page-item disabled">
+                        <span class="page-link">Next &rarr;</span>
+                    </li>
+
+                {% endif %}
+
+            </ul>
+
+        </nav>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

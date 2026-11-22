@@ -1,0 +1,127 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+<style>
+    .new-post-page {
+        min-height: 70vh;
+        padding: 3rem 1rem;
+        background: var(--bs-tertiary-bg);
+    }
+
+    .new-post-card {
+        width: 100%;
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 2.5rem;
+        background: var(--bs-body-bg);
+        border: 1px solid var(--bs-border-color);
+        border-radius: 1.25rem;
+        box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.06);
+    }
+
+    .new-post-page .form-control,
+    .new-post-page .form-select {
+        min-height: 48px;
+        border-radius: 0.75rem;
+    }
+
+    .new-post-page textarea.form-control {
+        min-height: 220px;
+        resize: vertical;
+    }
+
+    .new-post-page .form-label {
+        font-weight: 600;
+    }
+
+    .new-post-page .btn {
+        min-height: 46px;
+        padding-inline: 1.5rem;
+        border-radius: 0.75rem;
+        font-weight: 600;
+    }
+
+    @media (max-width: 576px) {
+        .new-post-card {
+            padding: 1.5rem;
+        }
+    }
+</style>
+
+<div class="new-post-page">
+    <div class="new-post-card">
+        <div class="mb-4">
+            <span class="badge text-bg-primary-subtle text-primary mb-3">
+                <i class="bi bi-pencil-square me-1" aria-hidden="true"></i>
+                Create
+            </span>
+            <h1 class="h3 fw-bold mb-2">Write a new post</h1>
+            <p class="text-body-secondary mb-0">
+                Share your ideas, stories, and knowledge with the community.
+            </p>
+        </div>
+
+        {% include 'blog/includes/errors.html' %}
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="title"
+                    id="title"
+                    placeholder="Give your post a clear title"
+                    required
+                >
+            </div>
+
+            <div class="mb-3">
+                <label for="content" class="form-label">Content</label>
+                <textarea
+                    class="form-control"
+                    id="content"
+                    name="content"
+                    placeholder="Start writing your post..."
+                    required
+                ></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="image" class="form-label">Cover image</label>
+                <input
+                    type="file"
+                    class="form-control"
+                    name="img_url"
+                    id="image"
+                    accept="image/*"
+                >
+                <div class="form-text">
+                    Choose an image to use as your post cover.
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="category" class="form-label">Category</label>
+                <select class="form-select" id="category" name="category" required>
+                    <option value="">Select a category</option>
+                    {% if categories %}
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
+
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-plus-lg me-2" aria-hidden="true"></i>
+                    Create Post
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

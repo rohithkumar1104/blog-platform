@@ -1,0 +1,323 @@
+
+{% extends "blog/base.html" %}
+
+{% block content %}
+
+<style>
+    .blog-detail {
+        --primary: #6366f1;
+        --text: #1e293b;
+        --muted: #64748b;
+        --border: #e2e8f0;
+
+        padding: 3rem 0 5rem;
+        color: var(--text);
+    }
+
+    .blog-detail .article-wrapper {
+        max-width: 100%;
+    }
+
+    /* Article header */
+    .blog-detail .article-category {
+        display: inline-block;
+        background: #eef2ff;
+        color: #4f46e5;
+        padding: 0.4rem 0.9rem;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        text-decoration: none;
+    }
+
+    .blog-detail .article-title {
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -1.5px;
+        margin-bottom: 1.25rem;
+        overflow-wrap: anywhere;
+    }
+
+    .blog-detail .article-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-bottom: 2rem;
+    }
+
+    .blog-detail .article-meta i {
+        color: var(--primary);
+    }
+
+    /* Featured image */
+    .blog-detail .article-image {
+        width: 100%;
+        max-height: 500px;
+        object-fit: cover;
+        border-radius: 20px;
+        margin-bottom: 2rem;
+        background: #f1f5f9;
+    }
+
+    /* Article content */
+    .blog-detail .article-content {
+        font-size: 1.05rem;
+        line-height: 1.9;
+        color: #334155;
+        overflow-wrap: anywhere;
+    }
+
+    .blog-detail .article-content p {
+        margin-bottom: 1.5rem;
+    }
+
+    .blog-detail .article-content h2,
+    .blog-detail .article-content h3 {
+        color: var(--text);
+        font-weight: 750;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .blog-detail .article-content img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 12px;
+    }
+
+    .blog-detail .article-content a {
+        color: var(--primary);
+    }
+
+    .blog-detail .article-content blockquote {
+        border-left: 4px solid var(--primary);
+        padding: 1rem 1.5rem;
+        margin: 2rem 0;
+        background: #f8fafc;
+        border-radius: 0 12px 12px 0;
+    }
+
+    /* Related posts */
+    .blog-detail .related-card {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        overflow: hidden;
+        position: sticky;
+        top: 2rem;
+    }
+
+    .blog-detail .related-header {
+        padding: 1.25rem 1.5rem;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .blog-detail .related-header h5 {
+        font-size: 1.05rem;
+        font-weight: 750;
+        margin: 0;
+    }
+
+    .blog-detail .related-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .blog-detail .related-list li {
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    .blog-detail .related-list li:last-child {
+        border-bottom: none;
+    }
+
+    .blog-detail .related-link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 1rem 1.5rem;
+        color: var(--text);
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 600;
+        line-height: 1.5;
+        transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .blog-detail .related-link:hover {
+        background: #f8fafc;
+        color: var(--primary);
+    }
+
+    .blog-detail .related-link i {
+        color: var(--muted);
+        flex-shrink: 0;
+        transition: transform 0.2s ease;
+    }
+
+    .blog-detail .related-link:hover i {
+        color: var(--primary);
+        transform: translateX(4px);
+    }
+
+    .blog-detail .related-empty {
+        padding: 1.5rem;
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin: 0;
+    }
+
+    /* Back to blog */
+    .blog-detail .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        transition: color 0.2s ease;
+    }
+
+    .blog-detail .back-link:hover {
+        color: var(--primary);
+    }
+
+    @media (max-width: 991px) {
+        .blog-detail {
+            padding: 2rem 0 3rem;
+        }
+
+        .blog-detail .related-card {
+            position: static;
+            margin-top: 2rem;
+        }
+
+        .blog-detail .article-image {
+            max-height: 400px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .blog-detail .article-title {
+            letter-spacing: -0.8px;
+        }
+
+        .blog-detail .article-image {
+            border-radius: 14px;
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-detail .article-content {
+            font-size: 1rem;
+        }
+    }
+</style>
+
+<div class="container blog-detail">
+
+    <div class="row g-4">
+
+        <!-- Main article -->
+        <div class="col-lg-8 article-wrapper">
+
+            <a href="{% url 'blog:index' %}" class="back-link">
+                <i class="bi bi-arrow-left"></i>
+                Back to blog
+            </a>
+
+            <article>
+
+                <!-- Article header -->
+                <header>
+
+                    <a href="#" class="article-category">
+                        {{ post.category.name }}
+                    </a>
+
+                    <h1 class="article-title">
+                        {{ post.title }}
+                    </h1>
+
+                    <div class="article-meta">
+                        <i class="bi bi-calendar3"></i>
+
+                        <span>
+                            Published on {{ post.created_at|date:"F j, Y" }}
+                        </span>
+                    </div>
+
+                </header>
+
+                <!-- Featured image -->
+                {% if post.formatted_img_url %}
+                    <img
+                        src="{{ post.formatted_img_url }}"
+                        class="article-image"
+                        alt="{{ post.title }}"
+                    >
+                {% endif %}
+
+                <!-- Article body -->
+                <div class="article-content">
+                    {{ post.content|linebreaks }}
+                </div>
+
+            </article>
+
+        </div>
+
+        <!-- Related posts sidebar -->
+        <aside class="col-lg-4">
+
+            <div class="related-card">
+
+                <div class="related-header">
+                    <h5>
+                        <i class="bi bi-journal-text me-2 text-primary"></i>
+                        Related Posts
+                    </h5>
+                </div>
+
+                <ul class="related-list">
+
+                    {% for item in related_post %}
+
+                        <li>
+                            <a
+                                href="{% url 'blog:detail' slug=item.slug %}"
+                                class="related-link"
+                            >
+                                <span>{{ item.title }}</span>
+                                <i class="bi bi-arrow-up-right"></i>
+                            </a>
+                        </li>
+
+                    {% empty %}
+
+                        <li>
+                            <p class="related-empty">
+                                No related posts available yet.
+                            </p>
+                        </li>
+
+                    {% endfor %}
+
+                </ul>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+</div>
+
+{% endblock %}

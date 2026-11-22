@@ -1,0 +1,650 @@
+
+{% extends "blog/base.html" %}
+
+{% block content %}
+
+<style>
+    .dashboard {
+        --primary: #6366f1;
+        --primary-dark: #4f46e5;
+        --text: #1e293b;
+        --muted: #64748b;
+        --border: #e2e8f0;
+
+        color: var(--text);
+        padding: 2.5rem 0 4rem;
+    }
+
+    /* Dashboard header */
+    .dashboard .welcome-card {
+        background: linear-gradient(135deg, #eef2ff, #f8fafc);
+        border: 1px solid #e0e7ff;
+        border-radius: 20px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .dashboard .welcome-title {
+        font-size: clamp(1.6rem, 4vw, 2.3rem);
+        font-weight: 800;
+        letter-spacing: -1px;
+        margin-bottom: 0.5rem;
+    }
+
+    .dashboard .welcome-subtitle {
+        color: var(--muted);
+        margin: 0;
+    }
+
+    .dashboard .group-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.25rem;
+        height: 100%;
+    }
+
+    .dashboard .group-card h5 {
+        font-weight: 700;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .dashboard .group-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .dashboard .group-list li {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .dashboard .group-list li:last-child {
+        margin-bottom: 0;
+    }
+
+    .dashboard .group-list i {
+        color: var(--primary);
+    }
+
+    /* Dashboard controls */
+    .dashboard .section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 1.5rem;
+    }
+
+    .dashboard .section-title {
+        font-size: 1.6rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        margin-bottom: 0.35rem;
+    }
+
+    .dashboard .section-subtitle {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin: 0;
+    }
+
+    .dashboard .new-post-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 0.8rem 1.2rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .dashboard .new-post-btn:hover {
+        background: var(--primary-dark);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    /* Post cards */
+    .dashboard .post-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+        gap: 1.5rem;
+    }
+
+    .dashboard .post-card {
+        display: flex;
+        flex-direction: column;
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        overflow: hidden;
+        height: 100%;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .dashboard .post-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 14px 35px rgba(15, 23, 42, 0.08);
+    }
+
+    .dashboard .post-image {
+        width: 100%;
+        height: 210px;
+        object-fit: cover;
+        background: #f1f5f9;
+    }
+
+    .dashboard .post-image-placeholder {
+        height: 210px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #eef2ff;
+        color: #818cf8;
+        font-size: 3rem;
+    }
+
+    .dashboard .post-body {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        padding: 1.4rem;
+    }
+
+    .dashboard .post-category {
+        display: inline-block;
+        align-self: flex-start;
+        background: #eef2ff;
+        color: #4f46e5;
+        border-radius: 50px;
+        padding: 0.35rem 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        margin-bottom: 0.9rem;
+        text-decoration: none;
+    }
+
+    .dashboard .post-title {
+        font-size: 1.15rem;
+        font-weight: 750;
+        line-height: 1.5;
+        margin-bottom: 0.75rem;
+    }
+
+    .dashboard .post-title a {
+        color: var(--text);
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .dashboard .post-title a:hover {
+        color: var(--primary);
+    }
+
+    .dashboard .post-description {
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.7;
+        margin-bottom: 1.25rem;
+    }
+
+    .dashboard .post-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-top: auto;
+        padding-top: 1rem;
+        border-top: 1px solid #f1f5f9;
+    }
+
+    .dashboard .read-more {
+        color: var(--primary);
+        font-size: 0.9rem;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .dashboard .read-more:hover {
+        color: var(--primary-dark);
+    }
+
+    /* Edit and delete buttons */
+    .dashboard .post-actions {
+        display: flex;
+        gap: 0.6rem;
+        margin-top: 1rem;
+    }
+
+    .dashboard .action-btn {
+        flex: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        border-radius: 9px;
+        padding: 0.6rem 0.75rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background 0.2s ease;
+    }
+
+    .dashboard .edit-btn {
+        background: #fef3c7;
+        color: #92400e;
+        border: 1px solid #fde68a;
+    }
+
+    .dashboard .edit-btn:hover {
+        background: #fde68a;
+        color: #78350f;
+    }
+
+    .dashboard .delete-btn {
+        background: #fff1f2;
+        color: #be123c;
+        border: 1px solid #fecdd3;
+    }
+
+    .dashboard .delete-btn:hover {
+        background: #ffe4e6;
+        color: #9f1239;
+    }
+
+    /* Empty state */
+    .dashboard .empty-state {
+        text-align: center;
+        padding: 4rem 1rem;
+        background: #f8fafc;
+        border: 1px dashed var(--border);
+        border-radius: 18px;
+    }
+
+    .dashboard .empty-state i {
+        font-size: 3rem;
+        color: #a5b4fc;
+        margin-bottom: 1rem;
+    }
+
+    .dashboard .empty-state h4 {
+        font-weight: 750;
+        margin-bottom: 0.5rem;
+    }
+
+    .dashboard .empty-state p {
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+    }
+
+    /* Pagination */
+    .dashboard .dashboard-pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 3rem;
+    }
+
+    .dashboard .pagination {
+        gap: 0.4rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .dashboard .page-link {
+        border: 1px solid var(--border);
+        border-radius: 10px !important;
+        color: var(--text);
+        padding: 0.65rem 0.9rem;
+        font-size: 0.9rem;
+        background: white;
+    }
+
+    .dashboard .page-link:hover {
+        background: #eef2ff;
+        color: var(--primary);
+        border-color: #c7d2fe;
+    }
+
+    .dashboard .page-item.active .page-link {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: white;
+    }
+
+    .dashboard .page-item.disabled .page-link {
+        background: #f8fafc;
+        color: #94a3b8;
+        pointer-events: none;
+    }
+
+    @media (max-width: 576px) {
+        .dashboard {
+            padding-top: 1.5rem;
+        }
+
+        .dashboard .welcome-card {
+            padding: 1.5rem;
+        }
+
+        .dashboard .section-header {
+            align-items: flex-start;
+        }
+
+        .dashboard .new-post-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+
+<div class="container dashboard">
+
+    <!-- Welcome section -->
+    <div class="welcome-card">
+
+        <div class="row g-4 align-items-center">
+
+            <div class="col-lg-7">
+
+                <h1 class="welcome-title">
+                    Hi, {{ user.username }}!
+                </h1>
+
+                <p class="welcome-subtitle">
+                    Welcome back to your blog dashboard.
+                    Manage your posts and share your ideas with the world.
+                </p>
+
+            </div>
+
+            <!-- Groups -->
+            <div class="col-lg-5">
+
+                <div class="group-card">
+
+                    <h5>
+                        <i class="bi bi-people me-2 text-primary"></i>
+                        Your Groups
+                    </h5>
+
+                    <ul class="group-list">
+
+                        <li>
+                            <i class="bi bi-people-fill"></i>
+                            [GROUP NAME]
+                        </li>
+
+                        <li>
+                            <i class="bi bi-info-circle"></i>
+                            You are not a member of any groups.
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Django messages and errors -->
+    <div class="row justify-content-center mb-4">
+
+        <div class="col-lg-8">
+            {% include 'blog/includes/errors.html' %}
+        </div>
+
+    </div>
+
+    <!-- Posts section -->
+    <div class="section-header">
+
+        <div>
+            <h2 class="section-title">
+                {{ blog_title }}
+            </h2>
+
+            <p class="section-subtitle">
+                Manage your articles and keep your ideas flowing.
+            </p>
+        </div>
+
+        <a href="{% url 'blog:new_post' %}" class="new-post-btn">
+            <i class="bi bi-plus-lg"></i>
+            Create New Post
+        </a>
+
+    </div>
+
+    <!-- Post grid -->
+    <div class="post-grid">
+
+        {% if page_obj %}
+
+            {% for post in page_obj %}
+
+                <article class="post-card">
+
+                    <!-- Post image -->
+                    <a
+                        href="{% url 'blog:detail' slug=post.slug %}"
+                        aria-label="Read {{ post.title }}"
+                    >
+
+                        {% if post.formatted_img_url %}
+
+                            <img
+                                src="{{ post.formatted_img_url }}"
+                                class="post-image"
+                                alt="{{ post.title }}"
+                                loading="lazy"
+                            >
+
+                        {% else %}
+
+                            <div class="post-image-placeholder">
+                                <i class="bi bi-journal-text"></i>
+                            </div>
+
+                        {% endif %}
+
+                    </a>
+
+                    <div class="post-body">
+
+                        <!-- Category -->
+                        <span class="post-category">
+                            {{ post.category.name }}
+                        </span>
+
+                        <!-- Title -->
+                        <h3 class="post-title">
+                            <a href="{% url 'blog:detail' slug=post.slug %}">
+                                {{ post.title }}
+                            </a>
+                        </h3>
+
+                        <!-- Description -->
+                        <p class="post-description">
+                            {{ post.content|striptags|truncatechars:120 }}
+                        </p>
+
+                        <!-- Read more -->
+                        <div class="post-footer">
+
+                            <a
+                                href="{% url 'blog:detail' slug=post.slug %}"
+                                class="read-more"
+                            >
+                                Read article <span>&rarr;</span>
+                            </a>
+
+                            <span class="text-muted small">
+                                <i class="bi bi-file-text me-1"></i>
+                                Article
+                            </span>
+
+                        </div>
+
+                        <!-- Edit and delete -->
+                        <div class="post-actions">
+
+                            <a
+                                class="action-btn edit-btn"
+                                href="{% url 'blog:edit_post' post_id=post.id %}"
+                            >
+                                <i class="bi bi-pencil-square"></i>
+                                Edit
+                            </a>
+
+                            <button
+                                type="button"
+                                class="action-btn delete-btn"
+                                onclick="confirmBeforeDelete(`{% url 'blog:delete_post' post_id=post.id %}`)"
+                            >
+                                <i class="bi bi-trash3"></i>
+                                Delete
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty-state">
+
+                <i class="bi bi-journal-plus d-block"></i>
+
+                <h4>No posts yet</h4>
+
+                <p>
+                    Your blog is waiting for its first article.
+                    Start writing and share your ideas!
+                </p>
+
+                <a href="{% url 'blog:new_post' %}" class="new-post-btn">
+                    <i class="bi bi-plus-lg"></i>
+                    Create Your First Post
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+    <!-- Pagination -->
+    {% if page_obj.has_other_pages %}
+
+        <nav class="dashboard-pagination" aria-label="Dashboard pagination">
+
+            <ul class="pagination">
+
+                {% if page_obj.has_previous %}
+
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1">
+                            &laquo; First
+                        </a>
+                    </li>
+
+                    <li class="page-item">
+                        <a
+                            class="page-link"
+                            href="?page={{ page_obj.previous_page_number }}"
+                        >
+                            &larr; Previous
+                        </a>
+                    </li>
+
+                {% else %}
+
+                    <li class="page-item disabled">
+                        <span class="page-link">&laquo; First</span>
+                    </li>
+
+                    <li class="page-item disabled">
+                        <span class="page-link">&larr; Previous</span>
+                    </li>
+
+                {% endif %}
+
+                <li class="page-item active">
+                    <span class="page-link">
+                        {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+                    </span>
+                </li>
+
+                {% if page_obj.has_next %}
+
+                    <li class="page-item">
+                        <a
+                            class="page-link"
+                            href="?page={{ page_obj.next_page_number }}"
+                        >
+                            Next &rarr;
+                        </a>
+                    </li>
+
+                    <li class="page-item">
+                        <a
+                            class="page-link"
+                            href="?page={{ page_obj.paginator.num_pages }}"
+                        >
+                            Last &raquo;
+                        </a>
+                    </li>
+
+                {% else %}
+
+                    <li class="page-item disabled">
+                        <span class="page-link">Next &rarr;</span>
+                    </li>
+
+                    <li class="page-item disabled">
+                        <span class="page-link">Last &raquo;</span>
+                    </li>
+
+                {% endif %}
+
+            </ul>
+
+        </nav>
+
+    {% endif %}
+
+</div>
+
+<!-- Delete confirmation -->
+<script>
+    function confirmBeforeDelete(url) {
+        const userConfirmed = confirm(
+            "Are you sure you want to delete this post?"
+        );
+
+        if (userConfirmed) {
+            window.location.href = url;
+        }
+    }
+</script>
+
+{% endblock %}
