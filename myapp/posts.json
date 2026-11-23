@@ -1,278 +1,278 @@
 [
-{
-  "model": "blog.category",
-  "pk": 1,
-  "fields": {
-    "name": "sports"
+  {
+    "model": "blog.category",
+    "pk": 1,
+    "fields": {
+      "name": "sports"
+    }
+  },
+  {
+    "model": "blog.category",
+    "pk": 2,
+    "fields": {
+      "name": "Tecnology"
+    }
+  },
+  {
+    "model": "blog.category",
+    "pk": 3,
+    "fields": {
+      "name": "Science"
+    }
+  },
+  {
+    "model": "blog.category",
+    "pk": 4,
+    "fields": {
+      "name": "Art"
+    }
+  },
+  {
+    "model": "blog.category",
+    "pk": 5,
+    "fields": {
+      "name": "Food"
+    }
+  },
+  {
+    "model": "blog.post",
+    "pk": 82,
+    "fields": {
+      "title": "Climate Change Solutions",
+      "content": "Practical strategies for reducing greenhouse gas emissions, protecting ecosystems, and building climate-resilient communities.",
+      "img_url": "https://picsum.photos/id/2/800/400",
+      "created_at": "2026-09-11T01:25:00.989Z",
+      "slug": "climate-change-solutions",
+      "category": 3,
+      "user": 1
+    }
+  },
+  {
+    "model": "blog.post",
+    "pk": 84,
+    "fields": {
+      "title": "Quantum Computing Explained",
+      "content": "Quantum principles, qubits, and advanced computational methods for solving complex problems beyond traditional computing.",
+      "img_url": "https://picsum.photos/id/4/800/400",
+      "created_at": "2026-09-11T01:25:01.007Z",
+      "slug": "quantum-computing-explained",
+      "category": 2,
+      "user": null
+    }
+  },
+  {
+    "model": "blog.post",
+    "pk": 85,
+    "fields": {
+      "title": "Renewable Energy Innovations",
+      "content": "Advanced solar, wind, hydrogen, battery storage, and other technologies accelerating the transition to clean energy.",
+      "img_url": "https://picsum.photos/id/5/800/400",
+      "created_at": "2026-09-11T01:25:01.017Z",
+      "slug": "renewable-energy-innovations",
+      "category": 5,
+      "user": null
+    }
+  },
+  {
+    "model": "blog.post",
+    "pk": 86,
+    "fields": {
+      "title": "Deep Learning Demystified",
+      "content": "Neural networks, data-driven learning, pattern recognition, and advanced algorithms powering modern artificial intelligence.",
+      "img_url": "https://picsum.photos/id/6/800/400",
+      "created_at": "2026-09-11T01:25:01.026Z",
+      "slug": "deep-learning-demystified",
+      "category": 5,
+      "user": null
+    }
+  },
+  {
+    "model": "blog.post",
+    "pk": 87,
+    "fields": {
+      "title": "Post-Pandemic Economic Outlook",
+      "content": "Economic recovery, inflation, employment, consumer behavior, and structural changes shaping the global economy after the pandemic.",
+      "img_url": "https://picsum.photos/id/7/800/400",
+      "created_at": "2026-09-11T01:25:01.035Z",
+      "slug": "post-pandemic-economic-outlook",
+      "category": 2,
+      "user": null
+    }
+  },
+  {
+    "model": "blog.post",
+    "pk": 88,
+    "fields": {
+      "title": "Blockchain In Finance",
+      "content": "Blockchain applications in financial transactions, digital assets, payment systems, security, transparency, and decentralized finance.",
+      "img_url": "https://picsum.photos/id/8/800/400",
+      "created_at": "2026-09-11T01:25:01.044Z",
+      "slug": "blockchain-in-finance",
+      "category": 3,
+      "user": null
+    }
+  },
+  {
+    "model": "blog.post",
+    "pk": 89,
+    "fields": {
+      "title": "Storytelling in Marketing",
+      "content": "The use of compelling narratives, emotional connections, and authentic brand experiences to influence consumer engagement.",
+      "img_url": "https://picsum.photos/id/9/800/400",
+      "created_at": "2026-09-11T01:25:01.053Z",
+      "slug": "storytelling-in-marketing",
+      "category": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "blog.post",
+    "pk": 90,
+    "fields": {
+      "title": "Medical Technology Advances",
+      "content": "Advancements in artificial intelligence, robotics, medical devices, diagnostics, personalized treatment, and digital healthcare.",
+      "img_url": "https://picsum.photos/id/10/800/400",
+      "created_at": "2026-09-11T01:25:01.062Z",
+      "slug": "medical-technology-advances",
+      "category": 4,
+      "user": null
+    }
+  },
+  {
+    "model": "blog.post",
+    "pk": 91,
+    "fields": {
+      "title": "Space Exploration Challenges",
+      "content": "Technological, financial, environmental, and human challenges associated with long-term space missions and exploration.",
+      "img_url": "https://picsum.photos/id/11/800/400",
+      "created_at": "2026-09-11T01:25:01.071Z",
+      "slug": "space-exploration-challenges",
+      "category": 4,
+      "user": null
+    }
+  },
+  {
+    "model": "blog.post",
+    "pk": 92,
+    "fields": {
+      "title": "Psychology of Decision Making",
+      "content": "Psychological factors, cognitive biases, emotions, experiences, and behavioral patterns influencing individual decision-making.",
+      "img_url": "https://picsum.photos/id/12/800/400",
+      "created_at": "2026-09-11T01:25:01.080Z",
+      "slug": "psychology-of-decision-making",
+      "category": 3,
+      "user": null
+    }
+  },
+  {
+    "model": "blog.post",
+    "pk": 93,
+    "fields": {
+      "title": "Evolution of Social Media",
+      "content": "The transformation of social media through emerging platforms, digital communication, content creation, algorithms, and changing user behavior.",
+      "img_url": "https://picsum.photos/id/13/800/400",
+      "created_at": "2026-09-11T01:25:01.088Z",
+      "slug": "evolution-of-social-media",
+      "category": 5,
+      "user": null
+    }
+  },
+  {
+    "model": "blog.post",
+    "pk": 94,
+    "fields": {
+      "title": "The Art of Cooking",
+      "content": "Creative techniques, culinary traditions, ingredients, flavors, and presentation that contribute to the preparation of exceptional food.",
+      "img_url": "https://picsum.photos/id/14/800/400",
+      "created_at": "2026-09-11T01:25:01.097Z",
+      "slug": "the-art-of-cooking",
+      "category": 3,
+      "user": null
+    }
+  },
+  {
+    "model": "blog.post",
+    "pk": 95,
+    "fields": {
+      "title": "Cultural Diversity in Society",
+      "content": "The role of cultural differences, traditions, identities, and perspectives in creating inclusive and harmonious societies.",
+      "img_url": "https://picsum.photos/id/15/800/400",
+      "created_at": "2026-09-11T01:25:01.104Z",
+      "slug": "cultural-diversity-in-society",
+      "category": 5,
+      "user": null
+    }
+  },
+  {
+    "model": "blog.post",
+    "pk": 96,
+    "fields": {
+      "title": "Sustainable Development Investments",
+      "content": "Financial strategies supporting economic growth, environmental protection, social progress, and long-term sustainable development.",
+      "img_url": "https://picsum.photos/id/16/800/400",
+      "created_at": "2026-09-11T01:25:01.113Z",
+      "slug": "sustainable-development-investments",
+      "category": 3,
+      "user": null
+    }
+  },
+  {
+    "model": "blog.post",
+    "pk": 97,
+    "fields": {
+      "title": "Globalization Impact",
+      "content": "Cross-border trade, technology, communication, cultural exchange, and economic integration influencing societies worldwide.",
+      "img_url": "https://picsum.photos/id/17/800/400",
+      "created_at": "2026-09-11T01:25:01.121Z",
+      "slug": "globalization-impact",
+      "category": 2,
+      "user": null
+    }
+  },
+  {
+    "model": "blog.post",
+    "pk": 98,
+    "fields": {
+      "title": "Power of Mindfulness",
+      "content": "Mindfulness practices supporting mental clarity, concentration, emotional balance, self-awareness, and overall well-being.",
+      "img_url": "https://picsum.photos/id/18/800/400",
+      "created_at": "2026-09-11T01:25:01.131Z",
+      "slug": "power-of-mindfulness",
+      "category": 2,
+      "user": null
+    }
+  },
+  {
+    "model": "blog.post",
+    "pk": 99,
+    "fields": {
+      "title": "Online Learning Revolution",
+      "content": "Digital platforms, interactive technologies, flexible education models, and personalized learning transforming modern education.",
+      "img_url": "https://picsum.photos/id/19/800/400",
+      "created_at": "2026-09-11T01:25:01.140Z",
+      "slug": "online-learning-revolution",
+      "category": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "blog.post",
+    "pk": 100,
+    "fields": {
+      "title": "Art and Technology Fusion",
+      "content": "The integration of digital tools, artificial intelligence, virtual reality, and emerging technologies with traditional and contemporary art.",
+      "img_url": "https://picsum.photos/id/20/800/400",
+      "created_at": "2026-09-11T01:25:01.148Z",
+      "slug": "art-and-technology-fusion",
+      "category": 3,
+      "user": null
+    }
+  },
+  {
+    "model": "blog.aboutus",
+    "pk": 2,
+    "fields": {
+      "content": "welcome to rohith website It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."
+    }
   }
-},
-{
-  "model": "blog.category",
-  "pk": 2,
-  "fields": {
-    "name": "Tecnology"
-  }
-},
-{
-  "model": "blog.category",
-  "pk": 3,
-  "fields": {
-    "name": "Science"
-  }
-},
-{
-  "model": "blog.category",
-  "pk": 4,
-  "fields": {
-    "name": "Art"
-  }
-},
-{
-  "model": "blog.category",
-  "pk": 5,
-  "fields": {
-    "name": "Food"
-  }
-},
-{
-  "model": "blog.post",
-  "pk": 82,
-  "fields": {
-    "title": "Climate Change Solutions",
-    "content": "Practical strategies for reducing greenhouse gas emissions, protecting ecosystems, and building climate-resilient communities.",
-    "img_url": "https://picsum.photos/id/2/800/400",
-    "created_at": "2026-09-11T01:25:00.989Z",
-    "slug": "climate-change-solutions",
-    "category": 3,
-    "user": 6
-  }
-},
-{
-  "model": "blog.post",
-  "pk": 84,
-  "fields": {
-    "title": "Quantum Computing Explained",
-    "content": "Quantum principles, qubits, and advanced computational methods for solving complex problems beyond traditional computing.",
-    "img_url": "https://picsum.photos/id/4/800/400",
-    "created_at": "2026-09-11T01:25:01.007Z",
-    "slug": "quantum-computing-explained",
-    "category": 2,
-    "user": null
-  }
-},
-{
-  "model": "blog.post",
-  "pk": 85,
-  "fields": {
-    "title": "Renewable Energy Innovations",
-    "content": "Advanced solar, wind, hydrogen, battery storage, and other technologies accelerating the transition to clean energy.",
-    "img_url": "https://picsum.photos/id/5/800/400",
-    "created_at": "2026-09-11T01:25:01.017Z",
-    "slug": "renewable-energy-innovations",
-    "category": 5,
-    "user": null
-  }
-},
-{
-  "model": "blog.post",
-  "pk": 86,
-  "fields": {
-    "title": "Deep Learning Demystified",
-    "content": "Neural networks, data-driven learning, pattern recognition, and advanced algorithms powering modern artificial intelligence.",
-    "img_url": "https://picsum.photos/id/6/800/400",
-    "created_at": "2026-09-11T01:25:01.026Z",
-    "slug": "deep-learning-demystified",
-    "category": 5,
-    "user": null
-  }
-},
-{
-  "model": "blog.post",
-  "pk": 87,
-  "fields": {
-    "title": "Post-Pandemic Economic Outlook",
-    "content": "Economic recovery, inflation, employment, consumer behavior, and structural changes shaping the global economy after the pandemic.",
-    "img_url": "https://picsum.photos/id/7/800/400",
-    "created_at": "2026-09-11T01:25:01.035Z",
-    "slug": "post-pandemic-economic-outlook",
-    "category": 2,
-    "user": null
-  }
-},
-{
-  "model": "blog.post",
-  "pk": 88,
-  "fields": {
-    "title": "Blockchain In Finance",
-    "content": "Blockchain applications in financial transactions, digital assets, payment systems, security, transparency, and decentralized finance.",
-    "img_url": "https://picsum.photos/id/8/800/400",
-    "created_at": "2026-09-11T01:25:01.044Z",
-    "slug": "blockchain-in-finance",
-    "category": 3,
-    "user": null
-  }
-},
-{
-  "model": "blog.post",
-  "pk": 89,
-  "fields": {
-    "title": "Storytelling in Marketing",
-    "content": "The use of compelling narratives, emotional connections, and authentic brand experiences to influence consumer engagement.",
-    "img_url": "https://picsum.photos/id/9/800/400",
-    "created_at": "2026-09-11T01:25:01.053Z",
-    "slug": "storytelling-in-marketing",
-    "category": 1,
-    "user": null
-  }
-},
-{
-  "model": "blog.post",
-  "pk": 90,
-  "fields": {
-    "title": "Medical Technology Advances",
-    "content": "Advancements in artificial intelligence, robotics, medical devices, diagnostics, personalized treatment, and digital healthcare.",
-    "img_url": "https://picsum.photos/id/10/800/400",
-    "created_at": "2026-09-11T01:25:01.062Z",
-    "slug": "medical-technology-advances",
-    "category": 4,
-    "user": null
-  }
-},
-{
-  "model": "blog.post",
-  "pk": 91,
-  "fields": {
-    "title": "Space Exploration Challenges",
-    "content": "Technological, financial, environmental, and human challenges associated with long-term space missions and exploration.",
-    "img_url": "https://picsum.photos/id/11/800/400",
-    "created_at": "2026-09-11T01:25:01.071Z",
-    "slug": "space-exploration-challenges",
-    "category": 4,
-    "user": null
-  }
-},
-{
-  "model": "blog.post",
-  "pk": 92,
-  "fields": {
-    "title": "Psychology of Decision Making",
-    "content": "Psychological factors, cognitive biases, emotions, experiences, and behavioral patterns influencing individual decision-making.",
-    "img_url": "https://picsum.photos/id/12/800/400",
-    "created_at": "2026-09-11T01:25:01.080Z",
-    "slug": "psychology-of-decision-making",
-    "category": 3,
-    "user": null
-  }
-},
-{
-  "model": "blog.post",
-  "pk": 93,
-  "fields": {
-    "title": "Evolution of Social Media",
-    "content": "The transformation of social media through emerging platforms, digital communication, content creation, algorithms, and changing user behavior.",
-    "img_url": "https://picsum.photos/id/13/800/400",
-    "created_at": "2026-09-11T01:25:01.088Z",
-    "slug": "evolution-of-social-media",
-    "category": 5,
-    "user": null
-  }
-},
-{
-  "model": "blog.post",
-  "pk": 94,
-  "fields": {
-    "title": "The Art of Cooking",
-    "content": "Creative techniques, culinary traditions, ingredients, flavors, and presentation that contribute to the preparation of exceptional food.",
-    "img_url": "https://picsum.photos/id/14/800/400",
-    "created_at": "2026-09-11T01:25:01.097Z",
-    "slug": "the-art-of-cooking",
-    "category": 3,
-    "user": null
-  }
-},
-{
-  "model": "blog.post",
-  "pk": 95,
-  "fields": {
-    "title": "Cultural Diversity in Society",
-    "content": "The role of cultural differences, traditions, identities, and perspectives in creating inclusive and harmonious societies.",
-    "img_url": "https://picsum.photos/id/15/800/400",
-    "created_at": "2026-09-11T01:25:01.104Z",
-    "slug": "cultural-diversity-in-society",
-    "category": 5,
-    "user": null
-  }
-},
-{
-  "model": "blog.post",
-  "pk": 96,
-  "fields": {
-    "title": "Sustainable Development Investments",
-    "content": "Financial strategies supporting economic growth, environmental protection, social progress, and long-term sustainable development.",
-    "img_url": "https://picsum.photos/id/16/800/400",
-    "created_at": "2026-09-11T01:25:01.113Z",
-    "slug": "sustainable-development-investments",
-    "category": 3,
-    "user": null
-  }
-},
-{
-  "model": "blog.post",
-  "pk": 97,
-  "fields": {
-    "title": "Globalization Impact",
-    "content": "Cross-border trade, technology, communication, cultural exchange, and economic integration influencing societies worldwide.",
-    "img_url": "https://picsum.photos/id/17/800/400",
-    "created_at": "2026-09-11T01:25:01.121Z",
-    "slug": "globalization-impact",
-    "category": 2,
-    "user": null
-  }
-},
-{
-  "model": "blog.post",
-  "pk": 98,
-  "fields": {
-    "title": "Power of Mindfulness",
-    "content": "Mindfulness practices supporting mental clarity, concentration, emotional balance, self-awareness, and overall well-being.",
-    "img_url": "https://picsum.photos/id/18/800/400",
-    "created_at": "2026-09-11T01:25:01.131Z",
-    "slug": "power-of-mindfulness",
-    "category": 2,
-    "user": null
-  }
-},
-{
-  "model": "blog.post",
-  "pk": 99,
-  "fields": {
-    "title": "Online Learning Revolution",
-    "content": "Digital platforms, interactive technologies, flexible education models, and personalized learning transforming modern education.",
-    "img_url": "https://picsum.photos/id/19/800/400",
-    "created_at": "2026-09-11T01:25:01.140Z",
-    "slug": "online-learning-revolution",
-    "category": 1,
-    "user": null
-  }
-},
-{
-  "model": "blog.post",
-  "pk": 100,
-  "fields": {
-    "title": "Art and Technology Fusion",
-    "content": "The integration of digital tools, artificial intelligence, virtual reality, and emerging technologies with traditional and contemporary art.",
-    "img_url": "https://picsum.photos/id/20/800/400",
-    "created_at": "2026-09-11T01:25:01.148Z",
-    "slug": "art-and-technology-fusion",
-    "category": 3,
-    "user": null
-  }
-},
-{
-  "model": "blog.aboutus",
-  "pk": 2,
-  "fields": {
-    "content": "welcome to rohith website It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."
-  }
-}
 ]
