@@ -10,7 +10,7 @@ class Category(models.Model):
 
 # Create your models here.
 class Post(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=500)
     content = models.TextField()
     img_url = models.ImageField(null=True, upload_to='posts/images/')
     created_at = models.DateTimeField(auto_now_add=True)
