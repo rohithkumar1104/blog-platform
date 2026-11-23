@@ -7,12 +7,14 @@ from django.core.paginator import Paginator
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
+from django.views.decorators.http import require_POST
 
 from .models import Post, AboutUs, Category
 from .forms import (
@@ -25,19 +27,18 @@ from .forms import (
 )
 
 
-# Display blog posts and handle search
+# Display public blog posts and handle search
 def index(request):
     title = "Latest post"
 
     search_query = request.GET.get("q", "").strip()
-    all_posts = Post.objects.all()
+    all_posts = Post.objects.all().order_by("-created_at")
 
     if search_query:
         all_posts = all_posts.filter(
             title__icontains=search_query
         )
 
-    # Paginate the filtered results
     paginator = Paginator(all_posts, 5)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
@@ -109,8 +110,7 @@ def contact(request):
                 },
             )
 
-        else:
-            logger.debug("Form validation failure")
+        logger.debug("Form validation failure")
 
         return render(
             request,
@@ -178,16 +178,20 @@ def login(request):
 
             if user is not None:
                 auth_login(request, user)
-                print("login success")
                 return redirect("blog:dashboard")
+
+            messages.error(request, "Invalid username or password")
 
     return render(request, "blog/login.html", {"form": form})
 
 
+@login_required
 def dashboard(request):
     blog_title = "My Posts"
 
-    all_posts = Post.objects.filter(user=request.user)
+    all_posts = Post.objects.filter(
+        user=request.user
+    ).order_by("-created_at")
 
     paginator = Paginator(all_posts, 5)
     page_number = request.GET.get("page")
@@ -209,40 +213,44 @@ def logout(request):
 
 
 def forgot_password(request):
-    form = ForgotPasswordForm
+    form = ForgotPasswordForm()
 
     if request.method == "POST":
         form = ForgotPasswordForm(request.POST)
 
         if form.is_valid():
             email = form.cleaned_data["email"]
-            user = User.objects.get(email=email)
+            user = User.objects.filter(email=email).first()
 
-            token = default_token_generator.make_token(user)
-            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            if user is not None:
+                token = default_token_generator.make_token(user)
+                uid = urlsafe_base64_encode(force_bytes(user.pk))
 
-            current_site = get_current_site(request)
-            domain = current_site.domain
+                current_site = get_current_site(request)
+                domain = current_site.domain
 
-            subject = "Reset password requested"
+                subject = "Reset password requested"
 
-            message = render_to_string(
-                "blog/reset_password_email.html",
-                {
-                    "domain": domain,
-                    "uid": uid,
-                    "token": token,
-                },
+                message = render_to_string(
+                    "blog/reset_password_email.html",
+                    {
+                        "domain": domain,
+                        "uid": uid,
+                        "token": token,
+                    },
+                )
+
+                send_mail(
+                    subject,
+                    message,
+                    "rohithkumarm111104@gmail.com",
+                    [email],
+                )
+
+            messages.success(
+                request,
+                "If an account exists for that email, a reset link has been sent.",
             )
-
-            send_mail(
-                subject,
-                message,
-                "rohithkumarm111104@gmail.com",
-                [email],
-            )
-
-            messages.success(request, "Email has been send")
 
     return render(
         request,
@@ -285,11 +293,10 @@ def reset_password(request, uidb64, token):
                 )
                 return redirect("blog:login")
 
-            else:
-                messages.error(
-                    request,
-                    "The password reset link is invalid",
-                )
+            messages.error(
+                request,
+                "The password reset link is invalid",
+            )
 
     return render(
         request,
@@ -298,6 +305,7 @@ def reset_password(request, uidb64, token):
     )
 
 
+@login_required
 def new_post(request):
     categories = Category.objects.all()
     form = PostForm()
@@ -322,10 +330,14 @@ def new_post(request):
     )
 
 
+@login_required
 def edit_post(request, post_id):
     categories = Category.objects.all()
-    post = get_object_or_404(Post, id=post_id)
-    form = PostForm()
+    post = get_object_or_404(
+        Post,
+        id=post_id,
+        user=request.user,
+    )
 
     if request.method == "POST":
         form = PostForm(
@@ -342,6 +354,8 @@ def edit_post(request, post_id):
                 "Your Post Updated successfully!",
             )
             return redirect("blog:dashboard")
+    else:
+        form = PostForm(instance=post)
 
     return render(
         request,
@@ -354,8 +368,14 @@ def edit_post(request, post_id):
     )
 
 
+@login_required
+@require_POST
 def delete_post(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
+    post = get_object_or_404(
+        Post,
+        id=post_id,
+        user=request.user,
+    )
     post.delete()
 
     messages.success(request, "Post deleted successfully!")
