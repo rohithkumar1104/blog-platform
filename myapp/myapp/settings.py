@@ -37,20 +37,23 @@ CSRF_TRUSTED_ORIGINS = [
 
 # Application definition
 INSTALLED_APPS = [
+    "unfold",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "django.contrib.staticfiles",
     "cloudinary_storage",
     "cloudinary",
-    "django.contrib.staticfiles",
     "rest_framework",
     "blog",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -87,20 +90,27 @@ WSGI_APPLICATION = "myapp.wsgi.application"
 # Uses local MySQL by default.
 # Set the DB_* environment variables for the hosted database.
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": os.environ.get("DB_NAME", "blog"),
-        "USER": os.environ.get("DB_USER", "root"),
-        "PASSWORD": os.environ.get("DB_PASSWORD", ""),
-        "HOST": os.environ.get("DB_HOST", "localhost"),
-        "PORT": os.environ.get("DB_PORT", "3306"),
-        "OPTIONS": {
-            "ssl_mode": "REQUIRED",
-        },
+if os.environ.get("DB_HOST"):
+    # Hosted MySQL (Render + Enzonic)
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": os.environ.get("DB_NAME", "blog"),
+            "USER": os.environ.get("DB_USER", "root"),
+            "PASSWORD": os.environ.get("DB_PASSWORD", ""),
+            "HOST": os.environ["DB_HOST"],
+            "PORT": os.environ.get("DB_PORT", "3306"),
+            "OPTIONS": {"ssl_mode": "REQUIRED"},
+        }
     }
-}
-
+else:
+    # Local development: SQLite, no setup needed
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -216,3 +226,8 @@ REST_FRAMEWORK = {
 }
 
 LOGIN_URL = "blog:login"
+
+UNFOLD = {
+    "SITE_TITLE": "Blog Admin",
+    "SITE_HEADER": "Blog Platform",
+}
